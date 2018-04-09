@@ -17,7 +17,13 @@ def connect(requete,ip_client):
 def add(requete,ip_client):
     if utilisateur.userIsConnected(ip_client):
         pseudo = utilisateur.getUserByIP(ip_client)
-        reponse = map.addPosition(pseudo,requete[1],"robots")
+        onMap = False
+        for robot in map.map["robots"]:
+            if robot["name"] == pseudo:
+                reponse = "Robot is already on the map"
+                onMap = True
+        if not onMap:
+            reponse = map.addPosition(pseudo,requete[1],"robots")
     else:
         reponse = "User is not connected"
     return reponse
