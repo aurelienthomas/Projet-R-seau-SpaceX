@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>503</width>
-    <height>546</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string>Projet_Reseau</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -19,7 +19,7 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="edit_pseudo">
    <property name="geometry">
     <rect>
      <x>82</x>
@@ -29,7 +29,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_pseudo">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -42,7 +42,7 @@
     <string>Pseudo :</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="connexion">
    <property name="geometry">
     <rect>
      <x>380</x>
@@ -55,7 +55,7 @@
     <string>Connexion</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_carte">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -68,7 +68,7 @@
     <string>Carte :</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="carte">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -78,17 +78,56 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="up">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>410</y>
-     <width>99</width>
-     <height>27</height>
+     <x>220</x>
+     <y>400</y>
+     <width>51</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="right">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>430</y>
+     <width>51</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="left">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>430</y>
+     <width>51</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="down">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>450</y>
+     <width>51</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
