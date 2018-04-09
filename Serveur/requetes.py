@@ -8,7 +8,7 @@ def connect(requete,ip_client):
             reponse = "450 username Alias already in use. Please try another alias."
         else:
             utilisateur.addUser(requete[1],ip_client)
-            reponse = map.getMap()
+            reponse = map.getMapJSON()
     else:
         reponse = "440 username invalid"
     return reponse
@@ -29,9 +29,11 @@ def asktransfer(requete,ip_client):
 
 
 def pause(ip_client):
-    robot = utilisateur.getUserByIP(ip_client)
-    if robot not in robot.paused_robots:
-        utilisateur.addRobotToPausedList(robot)
+    username = utilisateur.getUserByIP(ip_client)
+    LPausedRobots = robot.paused_robots
+    print(LPausedRobots)
+    if username not in LPausedRobots:
+        robot.addRobotToPausedList(username)
         reponse = "250 Paused"
     else:
         reponse = "444 Already Paused"
@@ -39,9 +41,11 @@ def pause(ip_client):
 
 
 def run(ip_client):
-    robot = utilisateur.getUserByIP(ip_client)
-    if robot in robot.paused_robots:
-        utilisateur.delRobotFromPausedList(robot)
+    username = utilisateur.getUserByIP(ip_client)
+    LPausedRobots = robot.paused_robots
+    print(LPausedRobots)
+    if username in LPausedRobots:
+        robot.delRobotFromPausedList(username)
         reponse = "260"
     else:
         reponse = "??? Robot is not in pause"
@@ -67,7 +71,31 @@ def info():
     reponse["Users"] = listOfUsersOnline
     return str(reponse)
 
+def up(ip_client):
+    reponse = robot.moveUp(ip_client)
+    return reponse
+
+
+def down(ip_client):
+    reponse = robot.moveDown(ip_client)
+    return reponse
+
+
+def left(ip_client):
+    reponse = robot.moveLeft(ip_client)
+    return reponse
+
+
+def right(ip_client):
+    reponse = robot.moveRight(ip_client)
+    return reponse
+
+def updateMap():
+    return map.getMapJSON()
+
+
 def exit(ip_client):
     user = utilisateur.getUserByIP(ip_client)
-    utilisateur.delUser(user)
+    if user is not None:
+        utilisateur.delUser(user)
     return "100 Déconnexion"

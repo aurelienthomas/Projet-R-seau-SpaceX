@@ -12,30 +12,10 @@ PORT = int(sys.argv[2])
 print(SERVER,PORT)
 
 with socket(AF_INET, SOCK_DGRAM) as sock:
-    """
     while True:
         cmd = input("Entrez votre commande: ")
-        if cmd == "quit":
+        sock.sendto(cmd.encode(), (SERVER, PORT))
+        reponse, _ = sock.recvfrom(TAILLE_TAMPON)
+        print(reponse.decode())
+        if cmd == "exit":
             break
-    """
-    sock.sendto("connect Oa".encode(), (SERVER, PORT))
-    reponse, _ = sock.recvfrom(TAILLE_TAMPON)
-    print(reponse.decode())
-
-with socket(AF_INET, SOCK_DGRAM) as sock:
-    sock.sendto("add (1,2)".encode(), (SERVER, PORT))
-    reponse, _ = sock.recvfrom(TAILLE_TAMPON)
-    print(reponse.decode())
-
-
-with socket(AF_INET, SOCK_DGRAM) as sock:
-    sock.sendto("info".encode(), (SERVER, PORT))
-    reponse, _ = sock.recvfrom(TAILLE_TAMPON)
-    print(reponse.decode())
-
-
-
-with socket(AF_INET, SOCK_DGRAM) as sock:
-    sock.sendto("EXIT".encode(), (SERVER, PORT))
-    reponse, _ = sock.recvfrom(TAILLE_TAMPON)
-    print(reponse.decode())

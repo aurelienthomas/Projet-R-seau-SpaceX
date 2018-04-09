@@ -9,7 +9,7 @@ def addUser(pseudo,ip):
 
 
 def delUser(pseudo):
-    return utilisateurs_connectes.pop(pseudo)
+    utilisateurs_connectes.pop(pseudo)
 
 
 def listOfConnectedUsers():
