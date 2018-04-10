@@ -73,8 +73,8 @@ while True:
             reponse = requetes.pause(ip_client)
         elif args[0] == "RUN":
             reponse = requetes.run(ip_client)
-        elif args[0] == "EXIT":
-            reponse = requetes.exit(ip_client)
+        elif args[0] == "QUIT":
+            reponse = requetes.quit(ip_client)
             sock.sendto(reponse.encode(), adr_client)
             break
 
