@@ -9,10 +9,24 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		QtGui.QWidget.__init__(self, parent)
 		self.setupUi(self)
 	
-	def charger_map(mapjson):
-		map = json.loads(mapjson)
-		self.carte.setColumnCount(map["dimensions"][0])
-		self.carte.setRowCount(map["dimensions"][0])
+	def charger_map(self, mapjson):
+		self.map = json.loads(mapjson)
+		self.carte.setColumnCount(self.map["dimensions"][0])
+		self.carte.setRowCount(self.map["dimensions"][1])
+		for x in range(self.map["dimensions"][0]):
+			self.carte.setColumnWidth(x, 50)
+		for y in range(self.map["dimensions"][1]):
+			self.carte.setRowHeight(y, 30)
+		self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+		elements_bloquants = self.map["blockingElements"]
+		for element in elements_bloquants:
+			self.carte.setItem(element["x"]+1,element["y"]+1,QtGui.QTableWidgetItem(element["name"]))
+		ressources = self.map["ressources"]
+		for ressource in ressources:
+			self.carte.setItem(ressource["x"]+1,ressource["y"]+1,QtGui.QTableWidgetItem(ressource["name"]))
+		robots = self.map["robots"]
+		for robot in robots:
+			self.carte.setItem(robot["x"]+1,robot["y"]+1,QtGui.QTableWidgetItem(robot["name"]))
 	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
@@ -24,7 +38,6 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			commande = "CONNECT "+self.edit_pseudo.text()
 			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
 			reponse, _ = sock.recvfrom(1028)
-			print(reponse.decode())
 			sock.close()
 			if "440" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Le pseudo que vous avez choisi n'est pas valide.")
@@ -39,8 +52,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				mapjson = reponse.decode().split(" ",1)[1]
 				print(mapjson)
 				self.charger_map(mapjson)
-				#ajout necessaire
-	
+
 	@QtCore.pyqtSlot()
 	def on_changer_pseudo_clicked(self):
 		#ajout necessaire
