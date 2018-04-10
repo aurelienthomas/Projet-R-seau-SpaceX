@@ -8,7 +8,7 @@ def connect(requete,ip_client):
             reponse = "450 username Alias already in use. Please try another alias."
         else:
             utilisateur.addUser(requete[1],ip_client)
-            reponse = map.getMapJSON()
+            reponse = "220 " + map.getMapJSON()
     else:
         reponse = "440 username invalid"
     return reponse
@@ -97,11 +97,11 @@ def right(ip_client):
     return reponse
 
 def updateMap():
-    return map.getMapJSON()
+    return "100 " + map.getMapJSON()
 
 
-def exit(ip_client):
+def quit(ip_client):
     user = utilisateur.getUserByIP(ip_client)
     if user is not None:
         utilisateur.delUser(user)
-    return "100 Déconnexion"
+    return "240 Successfully disconnected"
