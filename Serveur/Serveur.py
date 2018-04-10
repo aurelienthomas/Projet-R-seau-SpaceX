@@ -52,7 +52,7 @@ while True:
             reponse = requetes.name(args, ip_client)
             modCarte = True
         elif args[0] == "INFO":
-            reponse = requetes.info()
+            reponse = requetes.info(ip_client)
             modCarte = True
         elif args[0] == "UP":
             reponse = requetes.up(ip_client)
@@ -98,4 +98,5 @@ with open("serveurLog.txt", "a") as f:
     f.write(date.strftime("%d/%m/%Y %H:%M:%S") + " Server stopped...\n\n")
 #Serialization map
 map.serializationMap()
+map.serializationRessources()
 sys.exit(0)

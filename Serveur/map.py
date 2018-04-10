@@ -1,4 +1,5 @@
 import json
+import utilisateur
 
 def serializationMap():
     with open("map.json","w") as f:
@@ -12,6 +13,19 @@ def deserializationMap():
     return data
 
 
+def deserializationRessources():
+    with open("ressources.json","r") as f:
+        data = json.loads(f.read())
+
+    return data
+
+
+def serializationRessources():
+    with open("ressources.json","w") as f:
+        str = json.dumps(collectedRessources)
+        f.write(str)
+
+
 def getMapJSON():
     return json.dumps(map)
 
@@ -21,12 +35,20 @@ def getRobot(username):
             return robot
     return None
 
-def getListRessources():
-    list = []
-    for elem in map["ressources"]:
-        list.append(elem["name"])
+def getListRessources(user):
+    list = collectedRessources[user]
     return list
 
+def addRobotToRessourcesList(robotName):
+    collectedRessources[robotName] = []
+    print (collectedRessources)
+
+def addRessourceToRobotRessourcesList(robotName,ressourceAajouter):
+    #A REPARER
+    collectedRessources[robotName].append(ressourceAajouter)
+
+def delRessourceFromMap(ressource):
+    map["ressources"].remove(ressource)
 
 def addPosition(pseudo,posStr,cate):
     posStr = posStr.replace("(","")
@@ -50,7 +72,7 @@ def posAlreadyUsed(x,y):
                     return True
     return False
 
-def posCanMove(x,y):
+def posCanMove(x,y,username):
     if x < 0 or x > map["dimensions"][0] or y < 0 or y >  map["dimensions"][1]:
         return False
     for categories in map.keys():
@@ -58,6 +80,14 @@ def posCanMove(x,y):
             for elem in map[categories]:
                 if elem["x"] == x and elem["y"] == y:
                     return False
+        if categories == "ressources":
+            for ressource in map[categories]:
+                if ressource["x"] == x and ressource["y"] == y:
+                    ressName = ressource['name']
+                    addRessourceToRobotRessourcesList(username, ressName)
+                    delRessourceFromMap(ressource)
     return True
 
 map = deserializationMap()
+collectedRessources = deserializationRessources()
+print (collectedRessources)

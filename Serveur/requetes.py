@@ -8,6 +8,12 @@ def connect(requete,ip_client):
             reponse = "450 username Alias already in use. Please try another alias."
         else:
             utilisateur.addUser(requete[1],ip_client)
+            dejExis = False
+            for rob in map.map["robots"]:
+                if requete[1] == rob["name"]:
+                    dejExis = True
+            if not dejExis:
+                map.addRobotToRessourcesList(requete[1])
             reponse = "220 " + map.getMapJSON()
     else:
         reponse = "440 username invalid"
@@ -64,18 +70,22 @@ def name(requete, ip_client):
             reponse = "450 username Alias already in use. Please try another alias."
         else:
             utilisateur.changeName(requete[1],ip_client)
+            map.ressources[requete[1]] = map.ressources.pop(utilisateur.getUserByIP(ip_client))
             reponse = f"200 {requete[1]}"
     else:
         reponse = "440 username invalid"
     return reponse
 
-def info():
+
+def info(ip_client):
     reponse = {}
+    user = utilisateur.getUserByIP(ip_client)
     listOfUsersOnline = utilisateur.listOfConnectedUsers()
-    listOfRessources = map.getListRessources()
+    listOfRessources = map.getListRessources(user)
     reponse["Ressources"] = listOfRessources
     reponse["Users"] = listOfUsersOnline
     return str(reponse)
+
 
 def up(ip_client):
     reponse = robot.moveUp(ip_client)
