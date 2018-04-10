@@ -2,11 +2,17 @@ from PyQt4 import QtGui, QtCore
 from fen_principale import Ui_Form
 from socket import *
 import sys
+import json
 
 class MajQt(QtGui.QWidget, Ui_Form):
 	def __init__(self, parent=None):
 		QtGui.QWidget.__init__(self, parent)
 		self.setupUi(self)
+	
+	def charger_map(mapjson):
+		map = json.loads(mapjson)
+		self.carte.setColumnCount(map["dimensions"][0])
+		self.carte.setRowCount(map["dimensions"][0])
 	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
@@ -24,12 +30,15 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.msg_serv.setText("Le pseudo que vous avez choisi n'est pas valide.")
 				self.edit_pseudo.setText("")
 			elif "450" == reponse.decode().split(" ")[0]:
-				self.msq_serv.setText("Le pseudo que vous avez choisi est déjà utilisé.")
+				self.msg_serv.setText("Le pseudo que vous avez choisi est déjà utilisé.")
 				self.edit_pseudo.setText("")
 			else:
 				self.msg_serv.setText("Connexion réussie !")
 				self.pseudo.setText(self.edit_pseudo.text())
 				self.edit_pseudo.setText("")
+				mapjson = reponse.decode().split(" ",1)[1]
+				print(mapjson)
+				self.charger_map(mapjson)
 				#ajout necessaire
 	
 	@QtCore.pyqtSlot()
@@ -38,7 +47,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		self.pseudo.setText(self.edit_pseudo.text())
 		self.edit_pseudo.setText("")
 	
-	@QtCore.pyqtSlot()
+	"""@QtCore.pyqtSlot()
 	def on_up_clicked(self):
 		#code pour deplacer le robot de une case vers le haut
 	
@@ -64,7 +73,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 	
 	@QtCore.pyqtSlot()
 	def on_run_clicked(self):
-		#code pour relancer
+		#code pour relancer"""
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
