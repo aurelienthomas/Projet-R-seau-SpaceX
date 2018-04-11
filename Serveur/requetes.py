@@ -70,7 +70,7 @@ def name(requete, ip_client):
             reponse = "450 username Alias already in use. Please try another alias."
         else:
             utilisateur.changeName(requete[1],ip_client)
-            map.ressources[requete[1]] = map.ressources.pop(utilisateur.getUserByIP(ip_client))
+            map.ressources[requete[1]] = map.delRobotFromRessourcesList(utilisateur.getUserByIP(ip_client))
             reponse = f"200 {requete[1]}"
     else:
         reponse = "440 username invalid"

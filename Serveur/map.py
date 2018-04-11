@@ -42,6 +42,9 @@ def getListRessources(user):
 def addRobotToRessourcesList(robotName):
     collectedRessources[robotName] = []
 
+def delRobotFromRessourcesList(robotName):
+    return collectedRessources.pop(robotName)
+
 def addRessourceToRobotRessourcesList(robotName,ressourceAajouter):
     collectedRessources[robotName].append(ressourceAajouter)
 
