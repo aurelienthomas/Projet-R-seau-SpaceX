@@ -1,5 +1,6 @@
 import utilisateur
 import map
+import json
 import robot
 
 def connect(requete,ip_client):
@@ -75,13 +76,13 @@ def name(requete, ip_client):
 
 
 def info(ip_client):
-    reponse = {"Ressources":[],"Users":[]}
+    reponse = {}
     user = utilisateur.getUserByIP(ip_client)
     listOfUsersOnline = utilisateur.listOfConnectedUsers()
     listOfRessources = map.getListRessources(user)
     reponse["Ressources"] = listOfRessources
     reponse["Users"] = listOfUsersOnline
-    return "200 " + str(reponse)
+    return "200 " + json.dumps(reponse)
 
 
 def up(ip_client):
