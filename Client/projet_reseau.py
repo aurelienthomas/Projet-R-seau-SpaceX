@@ -36,7 +36,8 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			sock.close()
 			print(reponse.decode())
 			if "200" == reponse.decode().split(" ")[0]:
-				info = json.loads(reponse.decode().split(" ",1)[1])
+				infojson = reponse.decode().split(" ",1)[1]
+				info = json.loads(infojson)
 				print(info)
 				self.text_ressources.setText(info["Ressources"])
 				self.text_joueurs.setText(info["Users"])
