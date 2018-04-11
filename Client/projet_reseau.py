@@ -28,6 +28,19 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		for robot in robots:
 			self.carte.setItem(robot["y"],robot["x"],QtGui.QTableWidgetItem(robot["name"]))
 	
+	def charger_info(self):
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "INFO"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			print(reponse.decode())
+			if "200" == reponse.decode().split(" ")[0]:
+				info = json.loads(reponse.decode().split(" ",1)[1])
+				print(info)
+				self.text_ressources.setText(info["Ressources"])
+				self.text_joueurs.setText(info["Users"])
+	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
 		self.msg_serv.setText(self.edit_pseudo.text())
@@ -52,7 +65,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				mapjson = reponse.decode().split(" ",1)[1]
 				print(mapjson)
 				self.charger_map(mapjson)
-						
+				self.charger_info()
 
 	@QtCore.pyqtSlot()
 	def on_changer_pseudo_clicked(self):
@@ -65,6 +78,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.pseudo.setText(self.edit_pseudo.text())
 				self.msg_serv.setText("Pseudo changé.")
 				self.edit_pseudo.setText("")
+				self.charger_info()
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Impossible de changer le pseudo.")
 				self.edit_pseudo.setText("")
