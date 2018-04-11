@@ -56,9 +56,18 @@ class MajQt(QtGui.QWidget, Ui_Form):
 
 	@QtCore.pyqtSlot()
 	def on_changer_pseudo_clicked(self):
-		#ajout necessaire
-		self.pseudo.setText(self.edit_pseudo.text())
-		self.edit_pseudo.setText("")
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "NAME "+self.edit_pseudo.text()
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "200" == reponse.decode().split(" ")[0]:
+				self.pseudo.setText(self.edit_pseudo.text())
+				self.msg_serv.setText("Pseudo changé.")
+				self.edit_pseudo.setText("")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Impossible de changer le pseudo.")
+				self.edit_pseudo.setText("")
 	
 	@QtCore.pyqtSlot()
 	def on_ajouter_robot_clicked(self):
