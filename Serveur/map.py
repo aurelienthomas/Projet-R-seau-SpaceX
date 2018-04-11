@@ -16,7 +16,6 @@ def deserializationMap():
 def deserializationRessources():
     with open("ressources.json","r") as f:
         data = json.loads(f.read())
-
     return data
 
 
@@ -29,15 +28,25 @@ def serializationRessources():
 def getMapJSON():
     return json.dumps(map)
 
+
 def getRobot(username):
     for robot in map["robots"]:
         if robot["name"] == username:
             return robot
     return None
 
+
 def getListRessources(user):
     list = collectedRessources[user]
     return list
+
+
+def getRobot(ip):
+    actualName = utilisateur.getUserByIP(ip_client)
+    for robot in map.map["robots"]:
+        if robot["name"] == actualName:
+            return robot
+    return None
 
 
 def addRobotToRessourcesList(robotName):

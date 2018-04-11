@@ -61,12 +61,8 @@ def run(ip_client):
 
 def name(requete, ip_client):
     actualName = utilisateur.getUserByIP(ip_client)
-    onMap = False
-    for robot in map.map["robots"]:
-        if robot["name"] == actualName:
-            onMap = True
-            robotAModif = robot
-    if requete[1] and len(requete) == 2 and onMap == True:
+    robot = map.getRobot(ip_client)
+    if requete[1] and len(requete) == 2:
         if requete[1] in utilisateur.utilisateurs_connectes:
             reponse = "450 username Alias already in use. Please try another alias."
         else:
@@ -85,7 +81,7 @@ def info(ip_client):
     listOfRessources = map.getListRessources(user)
     reponse["Ressources"] = listOfRessources
     reponse["Users"] = listOfUsersOnline
-    return str(reponse)
+    return "200 " + str(reponse)
 
 
 def up(ip_client):
