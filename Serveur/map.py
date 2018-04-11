@@ -42,7 +42,7 @@ def getListRessources(user):
 
 
 def getRobot(ip):
-    actualName = utilisateur.getUserByIP(ip_client)
+    actualName = utilisateur.getUserByIP(ip)
     for robot in map.map["robots"]:
         if robot["name"] == actualName:
             return robot
