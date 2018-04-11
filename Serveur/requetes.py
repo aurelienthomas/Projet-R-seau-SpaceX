@@ -75,7 +75,7 @@ def name(requete, ip_client):
 
 
 def info(ip_client):
-    reponse = {}
+    reponse = {"Ressources":[],"Users":[]}
     user = utilisateur.getUserByIP(ip_client)
     listOfUsersOnline = utilisateur.listOfConnectedUsers()
     listOfRessources = map.getListRessources(user)
