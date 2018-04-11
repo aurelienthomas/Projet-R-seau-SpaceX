@@ -32,9 +32,6 @@ def getUserByIP(ip):
             return user
 
 
-def changeName(newName,ip):
-    actualName = getUserByIP(ip)
-    utilisateurs_connectes[newName] = utilisateurs_connectes.pop(actualName)
-    for robot in map.map["robots"]:
-        if robot["name"] == actualName:
-            robot["name"] = newName
+def changeName(newName, robot):
+    utilisateurs_connectes[newName] = utilisateurs_connectes.pop(robot["name"])
+    robot["name"] = newName

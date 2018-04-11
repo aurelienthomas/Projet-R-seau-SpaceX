@@ -39,17 +39,26 @@ def getListRessources(user):
     list = collectedRessources[user]
     return list
 
+
 def addRobotToRessourcesList(robotName):
     collectedRessources[robotName] = []
+
 
 def delRobotFromRessourcesList(robotName):
     return collectedRessources.pop(robotName)
 
+
 def addRessourceToRobotRessourcesList(robotName,ressourceAajouter):
     collectedRessources[robotName].append(ressourceAajouter)
 
+
 def delRessourceFromMap(ressource):
     map["ressources"].remove(ressource)
+
+
+def changeUserNameRess(newname,robot):
+    collectedRessources[newname] = delRobotFromRessourcesList(robot["name"])
+
 
 def addPosition(pseudo,posStr,cate):
     posStr = posStr.replace("(","")
