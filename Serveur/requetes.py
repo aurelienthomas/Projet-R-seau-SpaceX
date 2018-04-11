@@ -26,12 +26,12 @@ def add(requete,ip_client):
         onMap = False
         for robot in map.map["robots"]:
             if robot["name"] == pseudo:
-                reponse = "Robot is already on the map"
+                reponse = "430 Robot is already on the map"
                 onMap = True
         if not onMap:
             reponse = map.addPosition(pseudo,requete[1],"robots")
     else:
-        reponse = "User is not connected"
+        reponse = "430 User is not connected"
     return reponse
 
 
