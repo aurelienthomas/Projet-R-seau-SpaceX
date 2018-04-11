@@ -41,10 +41,8 @@ def getListRessources(user):
 
 def addRobotToRessourcesList(robotName):
     collectedRessources[robotName] = []
-    print (collectedRessources)
 
 def addRessourceToRobotRessourcesList(robotName,ressourceAajouter):
-    #A REPARER
     collectedRessources[robotName].append(ressourceAajouter)
 
 def delRessourceFromMap(ressource):
@@ -57,14 +55,14 @@ def addPosition(pseudo,posStr,cate):
     element={"name": pseudo,
             "x": int(pos[0]),
             "y": int(pos[1])}
-    if posAlreadyUsed(element["x"],element["y"]):
+    if isPosAlreadyUsed(element["x"],element["y"]):
         return "430 the coordinate is not free"
     else:
         map[cate].append(element)
         return f"210 {cate} is added"
 
 
-def posAlreadyUsed(x,y):
+def isPosAlreadyUsed(x,y):
     for categories in map.keys():
         if categories != "dimensions":
             for elem in map[categories]:
@@ -72,7 +70,7 @@ def posAlreadyUsed(x,y):
                     return True
     return False
 
-def posCanMove(x,y,username):
+def isPosAccesible(x,y,username):
     if x < 0 or x > map["dimensions"][0] or y < 0 or y >  map["dimensions"][1]:
         return False
     for categories in map.keys():

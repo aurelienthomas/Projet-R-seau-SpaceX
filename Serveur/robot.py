@@ -20,7 +20,7 @@ def moveUp(ip):
         return "can't move - unpause"
     if robot == None:
         return "??? pas de robot"
-    if map.posCanMove(robot["x"],robot["y"]+1,username):
+    if map.isPosAccesible(robot["x"],robot["y"]+1,username):
         robot["y"] = robot["y"]+1
         return f"270 ({robot['x']},{robot['y']})"
     return f"400 can't move here ({robot['x']},{robot['y']})"
@@ -32,7 +32,7 @@ def moveDown(ip):
         return "can't move - unpause"
     if robot == None:
         return "??? pas de robot"
-    if map.posCanMove(robot["x"],robot["y"]-1,username):
+    if map.isPosAccesible(robot["x"],robot["y"]-1,username):
         robot["y"] = robot["y"]-1
         return f"270 ({robot['x']},{robot['y']})"
     return f"400 can't move here ({robot['x']},{robot['y']})"
@@ -44,7 +44,7 @@ def moveLeft(ip):
         return "can't move - unpause"
     if robot == None:
         return "??? pas de robot"
-    if map.posCanMove(robot["x"]-1,robot["y"],username):
+    if map.isPosAccesible(robot["x"]-1,robot["y"],username):
         robot["x"] = robot["x"]-1
         return f"270 ({robot['x']},{robot['y']})"
     return f"400 can't move here ({robot['x']},{robot['y']})"
@@ -56,7 +56,7 @@ def moveRight(ip):
         return "can't move - unpause"
     if robot == None:
         return "??? pas de robot"
-    if map.posCanMove(robot["x"]+1,robot["y"],username):
+    if map.isPosAccesible(robot["x"]+1,robot["y"],username):
         robot["x"] = robot["x"]+1
         return f"270 ({robot['x']},{robot['y']})"
     return f"400 can't move here ({robot['x']},{robot['y']})"
