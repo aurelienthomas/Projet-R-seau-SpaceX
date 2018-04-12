@@ -29,7 +29,7 @@ def getMapJSON():
     return json.dumps(map)
 
 
-def getRobot(username):
+def getRobotByName(username):
     for robot in map["robots"]:
         if robot["name"] == username:
             return robot
@@ -41,7 +41,7 @@ def getListRessources(user):
     return list
 
 
-def getRobot(ip):
+def getRobotByIP(ip):
     actualName = utilisateur.getUserByIP(ip)
     for robot in map.map["robots"]:
         if robot["name"] == actualName:

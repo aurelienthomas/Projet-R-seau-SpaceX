@@ -15,7 +15,7 @@ def delRobotFromPausedList(robotName):
 
 def moveUp(ip):
     username = utilisateur.getUserByIP(ip)
-    robot = map.getRobot(username)
+    robot = map.getRobotByName(username)
     if username in paused_robots:
         return "can't move - unpause"
     if robot == None:
@@ -27,7 +27,7 @@ def moveUp(ip):
 
 def moveDown(ip):
     username = utilisateur.getUserByIP(ip)
-    robot = map.getRobot(username)
+    robot = map.getRobotByName(username)
     if username in paused_robots:
         return "can't move - unpause"
     if robot == None:
@@ -39,7 +39,7 @@ def moveDown(ip):
 
 def moveLeft(ip):
     username = utilisateur.getUserByIP(ip)
-    robot = map.getRobot(username)
+    robot = map.getRobotByName(username)
     if username in paused_robots:
         return "can't move - unpause"
     if robot == None:
@@ -51,7 +51,7 @@ def moveLeft(ip):
 
 def moveRight(ip):
     username = utilisateur.getUserByIP(ip)
-    robot = map.getRobot(username)
+    robot = map.getRobotByName(username)
     if username in paused_robots:
         return "can't move - unpause"
     if robot == None:
