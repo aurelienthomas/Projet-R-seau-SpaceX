@@ -40,6 +40,31 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.text_ressources.setText(', '.join(info["Ressources"]))
 				self.text_joueurs.setText(', '.join(info["Users"]))
 	
+	def update_map(self):
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "UPDATE"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "100" == reponse.decode().split(" ")[0]:
+				mapjson = reponse.decode().split(" ",1)[1]
+				self.map = json.loads(mapjson)
+				while self.carte.rowCount() > 0:
+					self.carte.removeRow(0)
+				self.carte.setRowCount(self.map["dimensions"][1])
+				for y in range(self.map["dimensions"][1]):
+					self.carte.setRowHeight(y, 30)
+				self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+				elements_bloquants = self.map["blockingElements"]
+				for element in elements_bloquants:
+					self.carte.setItem(element["y"],element["x"],QtGui.QTableWidgetItem(element["name"]))
+				ressources = self.map["ressources"]
+				for ressource in ressources:
+					self.carte.setItem(ressource["y"],ressource["x"],QtGui.QTableWidgetItem(ressource["name"]))
+				robots = self.map["robots"]
+				for robot in robots:
+					self.carte.setItem(robot["y"],robot["x"],QtGui.QTableWidgetItem(robot["name"]))
+	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
 		self.msg_serv.setText(self.edit_pseudo.text())
@@ -78,6 +103,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.msg_serv.setText("Pseudo changé.")
 				self.edit_pseudo.setText("")
 				self.charger_info()
+				self.update_map()
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Impossible de changer le pseudo.")
 				self.edit_pseudo.setText("")
@@ -107,6 +133,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			sock.close()
 			if "270" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement vers le haut effectué.")
+				self.update_map()
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement impossible.")
 	
@@ -119,6 +146,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			sock.close()
 			if "270" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement vers la droite effectué.")
+				self.update_map()
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement impossible.")
 	
@@ -131,6 +159,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			sock.close()
 			if "270" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement vers le bas effectué.")
+				self.update_map()
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement impossible.")
 	
@@ -143,6 +172,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			sock.close()
 			if "270" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement vers la gauche effectué.")
+				self.update_map()
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement impossible.")
 	
