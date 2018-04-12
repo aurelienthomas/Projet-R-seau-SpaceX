@@ -1,7 +1,5 @@
-import utilisateur
-import map
+import utilisateur, map, robot
 import json
-import robot
 
 def connect(requete,ip_client):
     if requete[1] and len(requete) == 2:
@@ -67,8 +65,8 @@ def name(requete, ip_client):
         if requete[1] in utilisateur.utilisateurs_connectes:
             reponse = "450 username Alias already in use. Please try another alias."
         else:
-            utilisateur.changeName(requete[1], robotAModif)
             map.changeUserNameRess(requete[1], robotAModif)
+            utilisateur.changeName(requete[1], robotAModif)
             reponse = f"200 {requete[1]}"
     else:
         reponse = "440 username invalid"
