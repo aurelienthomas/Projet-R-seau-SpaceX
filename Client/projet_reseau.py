@@ -38,9 +38,8 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			if "200" == reponse.decode().split(" ")[0]:
 				infojson = reponse.decode().split(" ",1)[1]
 				info = json.loads(infojson)
-				print(info)
-				self.text_ressources.setText(info["Ressources"])
-				self.text_joueurs.setText(info["Users"])
+				self.text_ressources.setText(', '.join(info["Ressources"]))
+				self.text_joueurs.setText(', '.join(info["Users"]))
 	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
@@ -100,22 +99,54 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.edit_x.setText("")
 				self.edit_y.setText("")
 
-	"""@QtCore.pyqtSlot()
+	@QtCore.pyqtSlot()
 	def on_up_clicked(self):
-		#code pour deplacer le robot de une case vers le haut
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "DOWN"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "270" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement vers le haut effectué.")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement impossible.")
 	
 	@QtCore.pyqtSlot()
 	def on_right_clicked(self):
-		#code pour deplacer le robot de une case vers la droite
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "RIGHT"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "270" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement vers la droite effectué.")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement impossible.")
 	
 	@QtCore.pyqtSlot()
 	def on_down_clicked(self):
-		#code pour deplacer le robot de une case vers le bas
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "UP"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "270" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement vers le bas effectué.")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement impossible.")
 	
 	@QtCore.pyqtSlot()
 	def on_left_clicked(self):
-		#code pour deplacer le robot de une case vers la gauche
-	
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "LEFT"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "270" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement vers la gauche effectué.")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Déplacement impossible.")
+	"""	
 	@QtCore.pyqtSlot()
 	def on_transfert_clicked(self):
 		#code pour le transfert
