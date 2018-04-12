@@ -24,7 +24,7 @@ def add(requete,ip_client):
                 reponse = "430 Robot is already on the map"
                 onMap = True
         if not onMap:
-            map.addRobotToRessourcesList(requete[1])
+            map.addRobotToRessourcesList(pseudo)
             reponse = map.addPosition(pseudo,requete[1],"robots")
     else:
         reponse = "430 User is not connected"
