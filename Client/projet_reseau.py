@@ -22,7 +22,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		for x in range(self.map["dimensions"][0]):
 			self.carte.setColumnWidth(x, 50)
 		for y in range(self.map["dimensions"][1]):
-			self.carte.setRowHeight(y, 50)
+			self.carte.setRowHeight(y, 40)
 		self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 		elements_bloquants = self.map["blockingElements"]
 		for element in elements_bloquants:
@@ -61,7 +61,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 					self.carte.removeRow(0)
 				self.carte.setRowCount(self.map["dimensions"][1])
 				for y in range(self.map["dimensions"][1]):
-					self.carte.setRowHeight(y, 50)
+					self.carte.setRowHeight(y, 40)
 				self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 				elements_bloquants = self.map["blockingElements"]
 				for element in elements_bloquants:
