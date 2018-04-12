@@ -40,9 +40,6 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.text_ressources.setText(', '.join(info["Ressources"]))
 				self.text_joueurs.setText(', '.join(info["Users"]))
 	
-	def update_map(self):
-		
-	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
 		self.msg_serv.setText(self.edit_pseudo.text())
