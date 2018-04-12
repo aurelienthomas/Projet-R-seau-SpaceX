@@ -213,3 +213,20 @@
 12/04/2018 10:31:50 Listen on: 8000
 12/04/2018 10:31:51 Server stopped...
 
+12/04/2018 10:32:50 Server started
+12/04/2018 10:32:50 Listen on: 8000
+12/04/2018 10:34:05 Server stopped...
+
+12/04/2018 10:34:07 Server started
+12/04/2018 10:34:07 Listen on: 8000
+12/04/2018 10:34:33 Server stopped...
+
+12/04/2018 10:34:48 Server started
+12/04/2018 10:34:48 Listen on: 8000
+12/04/2018 10:35:08Received CONNECT LAGIACKA from 127.0.0.1:60626
+12/04/2018 10:35:08Received INFO from 127.0.0.1:48829
+12/04/2018 10:35:12Received NAME KAPPA from 127.0.0.1:52973
+12/04/2018 10:48:14 Server started
+12/04/2018 10:48:14 Listen on: 8000
+12/04/2018 10:48:35 Server stopped...
+

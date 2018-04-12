@@ -146,18 +146,35 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				self.msg_serv.setText("Déplacement vers la gauche effectué.")
 			if "480" == reponse.decode().split(" ")[0]:
 				self.msg_serv.setText("Déplacement impossible.")
-	"""	
-	@QtCore.pyqtSlot()
-	def on_transfert_clicked(self):
-		#code pour le transfert
 	
 	@QtCore.pyqtSlot()
 	def on_pause_clicked(self):
-		#code pour mettre en pause
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "PAUSE"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "250" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Le robot a été mis en pause.")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Mise en pause impossible.")
 	
 	@QtCore.pyqtSlot()
 	def on_run_clicked(self):
-		#code pour relancer"""
+		with socket(AF_INET, SOCK_DGRAM) as sock:
+			commande = "RUN"
+			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
+			reponse, _ = sock.recvfrom(1028)
+			sock.close()
+			if "260" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Le robot peut reprendre son déplacement.")
+			if "480" == reponse.decode().split(" ")[0]:
+				self.msg_serv.setText("Lancement impossible.")
+
+	"""	
+	@QtCore.pyqtSlot()
+	def on_transfert_clicked(self):
+		#code pour le transfert"""
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
