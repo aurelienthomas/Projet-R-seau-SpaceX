@@ -3,15 +3,6 @@ from fen_principale import Ui_Form
 from socket import *
 import sys
 import json
-from threading import Thread
-
-class Update_thread(Thread):
-	def __init__(self, window):
-		Thread.__init__(self)
-		self.window = window
-	
-	def run(self):
-		self.window.thread_update()
 		
 class MajQt(QtGui.QWidget, Ui_Form):
 	def __init__(self, parent=None):
@@ -43,20 +34,14 @@ class MajQt(QtGui.QWidget, Ui_Form):
 			sock.sendto(commande.encode(), (sys.argv[1], int(sys.argv[2])))
 			reponse, _ = sock.recvfrom(1028)
 			sock.close()
-			print(reponse.decode())
 			if "200" == reponse.decode().split(" ")[0]:
 				infojson = reponse.decode().split(" ",1)[1]
 				info = json.loads(infojson)
 				self.text_ressources.setText(', '.join(info["Ressources"]))
 				self.text_joueurs.setText(', '.join(info["Users"]))
 	
-	def thread_update(self):
-		sock = socket(AF_INET, SOCK_STREAM)
-		sock.connect((sys.argv[1],int(sys.argv[2])))
-		while True:
-			reponse, _ = sock.recvfrom(1028)
-			if "100" == reponse.decode().split(" ")[0]:
-				print(reponse.decode().split(" ")[1])
+	def update_map(self):
+		
 	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
@@ -196,7 +181,6 @@ class MajQt(QtGui.QWidget, Ui_Form):
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	win = MajQt()
-	thread = Update_thread(win)
-	thread.start()
 	win.show()
 	sys.exit(app.exec_())
+	
