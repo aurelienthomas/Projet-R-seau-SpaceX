@@ -24,17 +24,28 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		for y in range(self.map["dimensions"][1]):
 			self.carte.setRowHeight(y, 40)
 		self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+		self.carte.setSelectionMode(QtGui.QAbstractItemView.NoSelection)
+		self.carte.verticalHeader().setResizeMode(QtGui.QHeaderView.Fixed)
+		self.carte.horizontalHeader().setResizeMode(QtGui.QHeaderView.Fixed)
 		elements_bloquants = self.map["blockingElements"]
 		for element in elements_bloquants:
 			self.carte.setItem(element["y"],element["x"],QtGui.QTableWidgetItem(element["name"]))
+			if element["name"] == "Rock":
+				self.carte.setCellWidget(element["y"],element["x"],ImgWidget("images/rock.png"))
 		ressources = self.map["ressources"]
 		for ressource in ressources:
 			self.carte.setItem(ressource["y"],ressource["x"],QtGui.QTableWidgetItem(ressource["name"]))
 			if ressource["name"] == "Gold":
 				self.carte.setCellWidget(ressource["y"],ressource["x"],ImgWidget("images/gold.png"))
+			if ressource["name"] == "Diamant":
+				self.carte.setCellWidget(ressource["y"],ressource["x"],ImgWidget("images/diamond.png"))
 		robots = self.map["robots"]
 		for robot in robots:
 			self.carte.setItem(robot["y"],robot["x"],QtGui.QTableWidgetItem(robot["name"]))
+			if robot["name"] == self.pseudo.text().upper():
+				self.carte.setCellWidget(robot["y"],robot["x"],ImgWidget("images/atlas.png"))
+			else:
+				self.carte.setCellWidget(robot["y"],robot["x"],ImgWidget("images/p_body.png"))
 	
 	def charger_info(self):
 		with socket(AF_INET, SOCK_DGRAM) as sock:
@@ -63,15 +74,27 @@ class MajQt(QtGui.QWidget, Ui_Form):
 				for y in range(self.map["dimensions"][1]):
 					self.carte.setRowHeight(y, 40)
 				self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+				self.carte.verticalHeader().setResizeMode(QtGui.QHeaderView.Fixed)
+				self.carte.horizontalHeader().setResizeMode(QtGui.QHeaderView.Fixed)
 				elements_bloquants = self.map["blockingElements"]
 				for element in elements_bloquants:
 					self.carte.setItem(element["y"],element["x"],QtGui.QTableWidgetItem(element["name"]))
+					if element["name"] == "Rock":
+						self.carte.setCellWidget(element["y"],element["x"],ImgWidget("images/rock.png"))
 				ressources = self.map["ressources"]
 				for ressource in ressources:
 					self.carte.setItem(ressource["y"],ressource["x"],QtGui.QTableWidgetItem(ressource["name"]))
+					if ressource["name"] == "Gold":
+						self.carte.setCellWidget(ressource["y"],ressource["x"],ImgWidget("images/gold.png"))
+					if ressource["name"] == "Diamond":
+						self.carte.setCellWidget(ressource["y"],ressource["x"],ImgWidget("images/diamond.png"))
 				robots = self.map["robots"]
 				for robot in robots:
 					self.carte.setItem(robot["y"],robot["x"],QtGui.QTableWidgetItem(robot["name"]))
+					if robot["name"] == self.pseudo.text().upper():
+						self.carte.setCellWidget(robot["y"],robot["x"],ImgWidget("images/atlas.png"))
+					else:
+						self.carte.setCellWidget(robot["y"],robot["x"],ImgWidget("images/p_body.png"))
 	
 	@QtCore.pyqtSlot()
 	def on_connexion_clicked(self):
