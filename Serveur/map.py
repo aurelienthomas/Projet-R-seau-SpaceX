@@ -37,7 +37,10 @@ def getRobotByName(username):
 
 
 def getListRessources(user):
-    list = collectedRessources[user]
+    if user in collectedRessources.keys():
+        list = collectedRessources[user]
+    else:
+        list = []
     return list
 
 
