@@ -1,10 +1,7 @@
 from socket import *
-import sys
+import sys, threading, time
 from datetime import datetime
-import time
-import utilisateur
-import map
-import requetes
+import utilisateur, map , requetes
 
 if len(sys.argv) != 2:
     print(f"Usage: {sys.argv[0]} <port>", file=sys.stderr)

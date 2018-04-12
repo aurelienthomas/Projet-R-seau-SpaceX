@@ -57,7 +57,7 @@ def addRobotToRessourcesList(robotName):
 
 
 def delRobotFromRessourcesList(robotName):
-    return collectedRessources.pop(robotName)
+    collectedRessources.remove(robotName)
 
 
 def addRessourceToRobotRessourcesList(robotName,ressourceAajouter):
@@ -65,11 +65,12 @@ def addRessourceToRobotRessourcesList(robotName,ressourceAajouter):
 
 
 def delRessourceFromMap(ressource):
-    map["ressources"].remove(ressource)
+    return map["ressources"].pop(ressource)
 
 
 def changeUserNameRess(newname,robot):
-    collectedRessources[newname] = delRobotFromRessourcesList(robot["name"])
+    print(robot)
+    collectedRessources[newname] = collectedRessources.pop(robot["name"])
 
 
 def addPosition(pseudo,posStr,cate):
