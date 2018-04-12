@@ -4,21 +4,29 @@ from datetime import datetime
 import time
 import utilisateur, map , requetes
 
-if len(sys.argv) != 2:
-    print(f"Usage: {sys.argv[0]} <port>", file=sys.stderr)
-    sys.exit(1)
 
+def loadConfig():
+    with open("spaceX.conf", "r") as r:
+        config = {}
+        for line in r:
+            conf = line.split(" ")
+            config[conf[0]] = conf[1].rstrip()
+    if (len(sys.argv) >= 2):
+        config["port"] = sys.argv[1]
+    return config
+
+config = loadConfig()
 TAILLE_TAMPON = 256
 sock = socket(AF_INET, SOCK_DGRAM)
 #Load map
 
 # Liaison de la socket à toutes les IP possibles de la machine
-sock.bind(("", int(sys.argv[1])))
-print("Serveur en attente sur le port " + sys.argv[1], file=sys.stderr)
+sock.bind(("", int(config["port"])))
+print("Serveur en attente sur le port " + config["port"], file=sys.stderr)
 dateInit = datetime.now()
 with open("serveurLog.txt", "a") as f:
     f.write(dateInit.strftime("%d/%m/%Y %H:%M:%S") + " Server started\n")
-    f.write(dateInit.strftime("%d/%m/%Y %H:%M:%S") + " Listen on: " + sys.argv[1] + "\n")
+    f.write(dateInit.strftime("%d/%m/%Y %H:%M:%S") + " Listen on: " + str(config["port"]) + "\n")
 
 #Server is listening
 while True:
@@ -72,19 +80,12 @@ while True:
         else:
             reponse = f"480 Invalid Command"
         sock.sendto(reponse.encode(), adr_client)
-        #A ENLEVER POUR LA VERSION FINAL
-        #/!\/!\/!\/!\/!\/!\/!\/!\/!\/!\
-        modCarte = False
-        # /!\/!\/!\/!\/!\/!\/!\/!\/!\
-        if modCarte:
-            for adrIP in utilisateur.utilisateurs_connectes.values():
-                sock.sendto(requetes.updateMap().encode(),(adrIP,port_client))
     except KeyboardInterrupt:
         break
 
 sock.close()
 print("Arrêt du serveur", file=sys.stderr)
-with open("serveurLog.txt", "a") as f:
+with open(config["path"] + "serveurLog.txt", "a") as f:
     date = datetime.now()
     f.write(date.strftime("%d/%m/%Y %H:%M:%S") + " Server stopped...\n\n")
 #Serialization map
