@@ -3,7 +3,13 @@ from fen_principale import Ui_Form
 from socket import *
 import sys
 import json
-		
+
+class ImgWidget(QtGui.QLabel):
+	def __init__(self, path, parent=None):
+		super(ImgWidget, self).__init__(parent)
+		pic = QtGui.QPixmap(path)
+		self.setPixmap(pic)
+
 class MajQt(QtGui.QWidget, Ui_Form):
 	def __init__(self, parent=None):
 		QtGui.QWidget.__init__(self, parent)
@@ -16,7 +22,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		for x in range(self.map["dimensions"][0]):
 			self.carte.setColumnWidth(x, 50)
 		for y in range(self.map["dimensions"][1]):
-			self.carte.setRowHeight(y, 30)
+			self.carte.setRowHeight(y, 50)
 		self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 		elements_bloquants = self.map["blockingElements"]
 		for element in elements_bloquants:
@@ -24,6 +30,8 @@ class MajQt(QtGui.QWidget, Ui_Form):
 		ressources = self.map["ressources"]
 		for ressource in ressources:
 			self.carte.setItem(ressource["y"],ressource["x"],QtGui.QTableWidgetItem(ressource["name"]))
+			if ressource["name"] == "Gold":
+				self.carte.setCellWidget(ressource["y"],ressource["x"],ImgWidget("images/gold.png"))
 		robots = self.map["robots"]
 		for robot in robots:
 			self.carte.setItem(robot["y"],robot["x"],QtGui.QTableWidgetItem(robot["name"]))
@@ -53,7 +61,7 @@ class MajQt(QtGui.QWidget, Ui_Form):
 					self.carte.removeRow(0)
 				self.carte.setRowCount(self.map["dimensions"][1])
 				for y in range(self.map["dimensions"][1]):
-					self.carte.setRowHeight(y, 30)
+					self.carte.setRowHeight(y, 50)
 				self.carte.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 				elements_bloquants = self.map["blockingElements"]
 				for element in elements_bloquants:
