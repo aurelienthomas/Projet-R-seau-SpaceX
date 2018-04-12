@@ -30,7 +30,8 @@ def add(requete,ip_client):
 
 
 def asktransfer(requete,ip_client):
-    reponse = "TO DO"
+    # TO DO
+    reponse = "480 Invalid Command"
     return reponse
 
 
@@ -54,7 +55,7 @@ def run(ip_client):
         robot.delRobotFromPausedList(username)
         reponse = "260"
     else:
-        reponse = "??? Robot is not in pause"
+        reponse = "445 Robot is not in pause"
     return reponse
 
 

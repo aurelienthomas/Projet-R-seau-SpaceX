@@ -1,6 +1,7 @@
 from socket import *
-import sys, threading, time
+import sys
 from datetime import datetime
+import time
 import utilisateur, map , requetes
 
 if len(sys.argv) != 2:
@@ -39,30 +40,22 @@ while True:
 
         # Envoi de la réponse au client
         args = request.split(" ")
-        modCarte = False
         if args[0] == "CONNECT":
             reponse = requetes.connect(args,ip_client)
         elif args[0] == "ADD":
             reponse = requetes.add(args,ip_client)
-            modCarte = True
         elif args[0] == "NAME":
             reponse = requetes.name(args, ip_client)
-            modCarte = True
         elif args[0] == "INFO":
             reponse = requetes.info(ip_client)
-            modCarte = True
         elif args[0] == "UP":
             reponse = requetes.up(ip_client)
-            modCarte = True
         elif args[0] == "DOWN":
             reponse = requetes.down(ip_client)
-            modCarte = True
         elif args[0] == "LEFT":
             reponse = requetes.left(ip_client)
-            modCarte = True
         elif args[0] == "RIGHT":
             reponse = requetes.right(ip_client)
-            modCarte = True
 
         elif args[0] == "ASKTRANSFER":
             reponse = requetes.asktransfer(args,ip_client)
@@ -74,7 +67,8 @@ while True:
             reponse = requetes.quit(ip_client)
             sock.sendto(reponse.encode(), adr_client)
             break
-
+        elif args[0] == "UPDATE":
+            reponse = requetes.updateMap()
         else:
             reponse = f"480 Invalid Command"
         sock.sendto(reponse.encode(), adr_client)

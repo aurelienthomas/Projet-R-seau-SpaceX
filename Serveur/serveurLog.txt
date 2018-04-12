@@ -290,3 +290,10 @@
 12/04/2018 20:00:19Received QUIT from 127.0.0.1:61149
 12/04/2018 20:00:19 Server stopped...
 
+12/04/2018 21:22:21 Server started
+12/04/2018 21:22:21 Listen on: 8007
+12/04/2018 21:22:25Received UPDATE from 127.0.0.1:56849
+12/04/2018 21:22:57 Server started
+12/04/2018 21:22:57 Listen on: 8007
+12/04/2018 21:23:00Received INFO from 127.0.0.1:55992
+12/04/2018 21:23:06Received UPDATE from 127.0.0.1:55992
