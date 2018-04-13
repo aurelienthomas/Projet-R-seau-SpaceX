@@ -21,10 +21,10 @@ def traiter_client(client, adr):
     nom_client = ""
     clients_connect.append((client, adr, nom_client))
     while True:
-        pr_term = ("{}> En attente d'une requête du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), str(adr)))
+        pr_term = (dateInit.strftime("%d/%m/%Y %H:%M:%S") + "> En attente d'une requête du client " + str(adr))
         # Récupération de la requête du client
         req = client.recv(TAILLE_TAMPON)
-        pr_term = ("{}> Réception du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), str(adr)))
+        pr_term = (dateInit.strftime("%d/%m/%Y %H:%M:%S")+ "> Réception du client " + str(adr))
         # Décodage du message en string
         mess = req.decode()
         if len(mess) == 0:
@@ -39,7 +39,7 @@ def traiter_client(client, adr):
                 (s, a, p) = (s, a, nom_client)
                 print((s, a, p))
         # Envoi de la réponse au client
-        pr_term = ("{}> Envoie de la réponse : {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S"), reponse))
+        pr_term = (dateInit.strftime("%d/%m/%Y %H:%M:%S") + "> Envoie de la réponse : " + reponse)
         client.send(reponse.encode())
         with open("serveurLog.txt", "a") as f:
             f.write(dateInit.strftime() + " " + pr_term + "\n")
