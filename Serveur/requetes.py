@@ -4,7 +4,7 @@ import json
 def connect(requete,ip_client):
 
     if requete[1] and len(requete) == 2:
-        if requete[1] in utilisateur.utilisateurs_connectes:
+        if requete[1] in utilisateur.users:
             reponse = "450 username Alias already in use. Please try another alias."
             statut = "DISCONNECT"
             pseudo = requete[1]
@@ -76,7 +76,7 @@ def name(requete, ip_client):
     actualName = utilisateur.getUserByIP(ip_client)
     robotAModif = map.getRobotByIP(ip_client)
     if requete[1] and len(requete) == 2:
-        if requete[1] in utilisateur.utilisateurs_connectes:
+        if requete[1] in utilisateur.users:
             reponse = "450 username Alias already in use. Please try another alias."
         else:
             map.changeUserNameRess(requete[1], robotAModif)
