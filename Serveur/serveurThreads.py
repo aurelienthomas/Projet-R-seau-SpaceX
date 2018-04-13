@@ -33,7 +33,7 @@ def traiter_client(client, adr):
                 client.send(reponse_serveur(reponse).encode())
             break
         # Construction de la réponse encodée
-        (reponse, statut, nom_client) = retour_requete(mess, nom_client)
+        (reponse, statut, nom_client) = retour_requete(mess, statut, nom_client)
         for s, a, p in clients_connect:
             if adr == a and nom_client != p:
                 (s, a, p) = (s, a, nom_client)
