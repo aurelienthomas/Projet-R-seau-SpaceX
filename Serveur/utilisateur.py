@@ -1,37 +1,37 @@
 import map
 
 
-utilisateurs_connectes = {}
+users = {}
 
 
 def addUser(pseudo,ip):
-    utilisateurs_connectes[pseudo] = ip
+    users[pseudo] = ip
 
 
 def delUser(pseudo):
-    utilisateurs_connectes.pop(pseudo)
+    users.pop(pseudo)
 
 
 def listOfConnectedUsers():
     list = []
-    for userName in utilisateurs_connectes.keys():
+    for userName in users.keys():
         list.append(userName)
     return list
 
 
 def userIsConnected(ip):
-    for user in utilisateurs_connectes.keys():
-        if utilisateurs_connectes[user] == ip:
+    for user in users.keys():
+        if users[user] == ip:
             return True
     return False
 
 
 def getUserByIP(ip):
-    for user in utilisateurs_connectes.keys():
-        if utilisateurs_connectes[user] == ip:
+    for user in users.keys():
+        if users[user] == ip:
             return user
 
 
 def changeName(newName, robot):
-    utilisateurs_connectes[newName] = utilisateurs_connectes.pop(robot["name"])
+    users[newName] = users.pop(robot["name"])
     robot["name"] = newName

@@ -48,29 +48,38 @@ while True:
 
         # Envoi de la réponse au client
         args = request.split(" ")
+        modCarte = False
         if args[0] == "CONNECT":
-            reponse = requetes.connect(args,ip_client)
+            (reponse, statut, pseudo) = requetes.connect(args,ip_client)
         elif args[0] == "ADD":
-            reponse = requetes.add(args,ip_client)
+            (reponse, statut) = requetes.add(args,ip_client)
+            modCarte = True
         elif args[0] == "NAME":
-            reponse = requetes.name(args, ip_client)
+            (reponse, pseudo) = requetes.name(args, ip_client)
+            modCarte = True
         elif args[0] == "INFO":
             reponse = requetes.info(ip_client)
         elif args[0] == "UP":
             reponse = requetes.up(ip_client)
+            modCarte = True
         elif args[0] == "DOWN":
             reponse = requetes.down(ip_client)
+            modCarte = True
         elif args[0] == "LEFT":
             reponse = requetes.left(ip_client)
+            modCarte = True
         elif args[0] == "RIGHT":
             reponse = requetes.right(ip_client)
+            modCarte = True
 
         elif args[0] == "ASKTRANSFER":
             reponse = requetes.asktransfer(args,ip_client)
         elif args[0] == "PAUSE":
-            reponse = requetes.pause(ip_client)
+            (reponse, statut) = requetes.pause(ip_client)
         elif args[0] == "RUN":
-            reponse = requetes.run(ip_client)
+            (reponse, statut) = requetes.run(ip_client)
+        elif args[0] == "UPDATE":
+            reponse = requetes.updateMap()
         elif args[0] == "QUIT":
             reponse = requetes.quit(ip_client)
             sock.sendto(reponse.encode(), adr_client)
