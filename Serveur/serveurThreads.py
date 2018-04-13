@@ -20,6 +20,8 @@ def traiter_client(client, adr):
     statut = "DISCONNECT"
     nom_client = ""
     clients_connect.append((client, adr, nom_client))
+    mess_connect = reponse_serveur("Bonjour et bienvenu dans le jeu.\nVeuillez vous connecter avec la commande CONNECT <pseudo> :")
+    client.send(mess_connect.encode())
     while True:
         pr_term = ("{}> En attente d'une requête du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), adr))
         # Récupération de la requête du client
@@ -41,12 +43,9 @@ def traiter_client(client, adr):
         # Envoi de la réponse au client
         pr_term = ("{}> Envoie de la réponse : {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S"), reponse))
         client.send(reponse.encode())
-
         with open("serveurLog.txt", "a") as f:
             f.write(dateInit.strftime(pr_term + "\n")
-
     client.close()
-    print(pr_term)
 
 
 def retour_requete(mess,statut, pseudo):
@@ -131,7 +130,7 @@ while True:
         (sock_client, adr_client) = requete
         ip_client, port_client = adr_client
         list_clients.append(sock_client)
-        list_threads.append(((threading.Thread(target=traiter_client, args=(sock_client, adr_client,)) \
+        list_threads.append(((threading.Thread(target=traiter_client, args=(sock_client, adr_client)) \
             .start()), adr_client))
     except KeyboardInterrupt:
         break
