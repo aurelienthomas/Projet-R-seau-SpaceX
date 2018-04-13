@@ -26,7 +26,7 @@ def traiter_client(client, adr):
         req = client.recv(TAILLE_TAMPON)
         pr_term = (dateInit.strftime("%d/%m/%Y %H:%M:%S")+ "> Réception du client " + str(adr))
         # Décodage du message en string
-        mess = req.decode()
+        mess = req.decode().upper()
         if len(mess) == 0:
             if mess.upper() == "QUIT":
                 reponse = (code_success("240") + "\nDéconnexion du client")
@@ -48,7 +48,6 @@ def traiter_client(client, adr):
 
 
 def retour_requete(mess,statut, pseudo):
-    msg.upper()
     args = mess.split(" ")
     modCarte = False
     if args[0] == "CONNECT":
