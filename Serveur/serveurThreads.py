@@ -21,10 +21,10 @@ def traiter_client(client, adr):
     nom_client = ""
     clients_connect.append((client, adr, nom_client))
     while True:
-        pr_term = ("{}> En attente d'une requête du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), adr))
+        pr_term = ("{}> En attente d'une requête du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), str(adr)))
         # Récupération de la requête du client
         req = client.recv(TAILLE_TAMPON)
-        pr_term = ("{}> Réception du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), adr))
+        pr_term = ("{}> Réception du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), str(adr)))
         # Décodage du message en string
         mess = req.decode()
         if len(mess) == 0:
