@@ -1,5 +1,5 @@
 from socket import *
-import sys
+import sys, threading
 from datetime import datetime
 import time
 import utilisateur, map , requetes
@@ -17,6 +17,7 @@ def loadConfig():
 
 
 def traiter_client(client, adr):
+    statut = "DISCONNECT"
     nom_client = ""
     clients_connect.append((client, adr, nom_client))
     while True:
@@ -26,13 +27,13 @@ def traiter_client(client, adr):
         pr_term = ("{}> Réception du client {}".format(date_heure(), adr))
         # Décodage du message en string
         mess = req.decode()
-        if mess.upper() == "QUIT" or len(mess) == 0:
+        if len(mess) == 0:
             if mess.upper() == "QUIT":
                 reponse = (code_success("240") + "\nDéconnexion du client")
                 client.send(reponse_serveur(reponse).encode())
             break
         # Construction de la réponse encodée
-        reponse = retour_requete(mess, nom_client)
+        (reponse, statut, nom_client) = retour_requete(mess, nom_client)
         for s, a, p in clients_connect:
             if adr == a and nom_client != p:
                 (s, a, p) = (s, a, nom_client)
@@ -40,41 +41,50 @@ def traiter_client(client, adr):
         # Envoi de la réponse au client
         pr_term = ("{}> Envoie de la réponse : {}".format(date_heure(), reponse))
         client.send(reponse.encode())
-    del_user(nom_client)
     client.close()
     print(pr_term)
 
 
-def retour_requete(mess, pseudo):
+def retour_requete(mess,statut, pseudo):
+    msg.upper()
     args = mess.split(" ")
+    modCarte = False
     if args[0] == "CONNECT":
-        reponse = requetes.connect(args,ip_client)
+        (reponse, statut, pseudo) = requetes.connect(args,ip_client)
     elif args[0] == "ADD":
-        reponse = requetes.add(args,ip_client)
+        (reponse, statut) = requetes.add(args,ip_client)
+        modCarte = True
     elif args[0] == "NAME":
-        reponse = requetes.name(args, ip_client)
+        (reponse, pseudo) = requetes.name(args, ip_client)
+        modCarte = True
     elif args[0] == "INFO":
         reponse = requetes.info(ip_client)
     elif args[0] == "UP":
         reponse = requetes.up(ip_client)
+        modCarte = True
     elif args[0] == "DOWN":
         reponse = requetes.down(ip_client)
+        modCarte = True
     elif args[0] == "LEFT":
         reponse = requetes.left(ip_client)
+        modCarte = True
     elif args[0] == "RIGHT":
         reponse = requetes.right(ip_client)
+        modCarte = True
 
     elif args[0] == "ASKTRANSFER":
         reponse = requetes.asktransfer(args,ip_client)
     elif args[0] == "PAUSE":
-        reponse = requetes.pause(ip_client)
+        (reponse, statut) = requetes.pause(ip_client)
     elif args[0] == "RUN":
-        reponse = requetes.run(ip_client)
+        (reponse, statut) = requetes.run(ip_client)
     elif args[0] == "UPDATE":
         reponse = requetes.updateMap()
     else:
         reponse = f"480 Invalid Command"
-    return reponse
+    if modCarte:
+        client_refresh_map()
+    return (reponse, statut, pseudo)
 
 # Transfert de la map à tous les clients
 def client_refresh_map():
@@ -118,7 +128,6 @@ while True:
         list_clients.append(sock_client)
         list_threads.append(((threading.Thread(target=traiter_client, args=(sock_client, adr_client,)) \
             .start()), adr_client))
-
 
         # Construction de la réponse
         request = mess.decode().upper()
