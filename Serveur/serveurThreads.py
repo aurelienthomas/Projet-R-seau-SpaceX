@@ -20,8 +20,6 @@ def traiter_client(client, adr):
     statut = "DISCONNECT"
     nom_client = ""
     clients_connect.append((client, adr, nom_client))
-    mess_connect = reponse_serveur("Bonjour et bienvenu dans le jeu.\nVeuillez vous connecter avec la commande CONNECT <pseudo> :")
-    client.send(mess_connect.encode())
     while True:
         pr_term = ("{}> En attente d'une requête du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), adr))
         # Récupération de la requête du client
