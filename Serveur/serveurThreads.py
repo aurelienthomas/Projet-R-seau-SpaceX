@@ -21,10 +21,10 @@ def traiter_client(client, adr):
     nom_client = ""
     clients_connect.append((client, adr, nom_client))
     while True:
-        pr_term = ("{}> En attente d'une requête du client {}".format(date_heure(), adr))
+        pr_term = ("{}> En attente d'une requête du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), adr))
         # Récupération de la requête du client
         req = client.recv(TAILLE_TAMPON)
-        pr_term = ("{}> Réception du client {}".format(date_heure(), adr))
+        pr_term = ("{}> Réception du client {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S")(), adr))
         # Décodage du message en string
         mess = req.decode()
         if len(mess) == 0:
@@ -39,8 +39,12 @@ def traiter_client(client, adr):
                 (s, a, p) = (s, a, nom_client)
                 print((s, a, p))
         # Envoi de la réponse au client
-        pr_term = ("{}> Envoie de la réponse : {}".format(date_heure(), reponse))
+        pr_term = ("{}> Envoie de la réponse : {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S"), reponse))
         client.send(reponse.encode())
+
+        with open("serveurLog.txt", "a") as f:
+            f.write(dateInit.strftime(pr_term + "\n")
+
     client.close()
     print(pr_term)
 
@@ -84,6 +88,7 @@ def retour_requete(mess,statut, pseudo):
         reponse = f"480 Invalid Command"
     if modCarte:
         client_refresh_map()
+
     return (reponse, statut, pseudo)
 
 # Transfert de la map à tous les clients
@@ -128,15 +133,6 @@ while True:
         list_clients.append(sock_client)
         list_threads.append(((threading.Thread(target=traiter_client, args=(sock_client, adr_client,)) \
             .start()), adr_client))
-
-        # Construction de la réponse
-        request = mess.decode().upper()
-        #On écrit la requête reçue
-
-
-
-
-        sock_serveur.sendto(reponse.encode(), adr_client)
     except KeyboardInterrupt:
         break
 
