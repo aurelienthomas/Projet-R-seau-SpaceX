@@ -105,7 +105,7 @@ def client_refresh_map():
 list_clients = []
 
 # Liste des pseudos et adresse client
-clients_connect = utilisateur.users
+clients_connect = []
 
 # Liste des threads
 list_threads = []
