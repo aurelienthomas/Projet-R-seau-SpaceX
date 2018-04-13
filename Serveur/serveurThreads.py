@@ -44,7 +44,8 @@ def traiter_client(client, adr):
         pr_term = ("{}> Envoie de la réponse : {}".format(dateInit.strftime("%d/%m/%Y %H:%M:%S"), reponse))
         client.send(reponse.encode())
         with open("serveurLog.txt", "a") as f:
-            f.write(dateInit.strftime(pr_term + "\n")
+            f.write(dateInit.strftime() + " " + pr_term + "\n")
+    print("requête traité")
     client.close()
 
 
