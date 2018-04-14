@@ -123,3 +123,25 @@
 13/04/2018 13:16:05 Server started
 13/04/2018 13:16:05 Listen on: 8000
 >>>>>>> b793d1353da71b934191f9f97eb9010aef56beee
+13/04/2018 13:35:35 Server started
+13/04/2018 13:35:35 Listen on: 8000
+13/04/2018 13:36:53 Server started
+13/04/2018 13:36:53 Listen on: 8000
+13/04/2018 13:39:50 Server started
+13/04/2018 13:39:50 Listen on: 8000
+13/04/2018 13:42:22 Server started
+13/04/2018 13:42:22 Listen on: 8001
+13/04/2018 13:45:48 Server started
+13/04/2018 13:45:48 Listen on: 8000
+13/04/2018 13:48:21 Server started
+13/04/2018 13:48:21 Listen on: 8000
+13/04/2018 13:50:19 Server started
+13/04/2018 13:50:19 Listen on: 8001
+13/04/2018 13:52:43 Server started
+13/04/2018 13:52:43 Listen on: 8001
+13/04/2018 13:52:43> Envoie de la réponse : 220 {"dimensions": [42, 42], "blockingElements": [{"name": "Rock", "x": 12, "y": 13}, {"name": "Rock", "x": 15, "y": 32}], "ressources": [{"name": "Gold", "x": 12, "y": 13}, {"name": "Diamant", "x": 26, "y": 15}, {"name": "Gold", "x": 22, "y": 13}], "robots": [{"name": "R2D2", "x": 21, "y": 21}, {"name": "OA", "x": 11, "y": 13}, {"name": "KAPPA", "x": 2, "y": 1}]}
+13/04/2018 13:52:43> Envoie de la réponse : 200 {"Ressources": [], "Users": ["KAPPA"]}
+13/04/2018 13:52:43> Envoie de la réponse : 270 (2,2)
+13/04/2018 13:52:43> Envoie de la réponse : 270 (2,3)
+13/04/2018 13:52:43> Envoie de la réponse : 440 username invalid
+13/04/2018 13:52:43> Envoie de la réponse : 200 NEWNAME
